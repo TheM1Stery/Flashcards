@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.0.123" />
+      <PackageReference Include="FastEndpoints" Version="5.8.0" />
+      <PackageReference Include="FastEndpoints.Generator" Version="5.8.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="FastEndpoints.Swagger" Version="5.8.0" />
+      <PackageReference Include="FluentValidation" Version="11.5.1" />
+      <PackageReference Include="Mediator.Abstractions" Version="2.2.0-preview.2" />
+      <PackageReference Include="Mediator.SourceGenerator" Version="2.2.0-preview.2">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.4" />
+      <PackageReference Include="OneOf" Version="3.0.243" />
+      <PackageReference Include="Scrutor" Version="4.2.1" />
+      <PackageReference Include="ValueOf" Version="2.0.31" />
+      <PackageReference Include="Vogen" Version="3.0.12" />
+        
+    </ItemGroup>
+
+</Project>
