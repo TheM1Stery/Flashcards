@@ -2,6 +2,7 @@
 using Dapper;
 using FastEndpoints;
 using Flashcards.API.Domain.Cards;
+using Flashcards.API.Domain.Tags;
 using Flashcards.API.Endpoints.Cards.Contracts;
 using Mediator;
 
@@ -22,8 +23,24 @@ public class GetAllCardsQueryHandler : IQueryHandler<GetAllCardsQuery, Card[]>
 
     public async ValueTask<Card[]> Handle(GetAllCardsQuery query, CancellationToken cancellationToken)
     {
-        var cards = await _dbConnection.QueryAsync<Card>("SELECT * FROM Cards");
-        return cards.ToArray();
+        var cards = await _dbConnection.QueryAsync<Card, Tag, Card>(
+            "SELECT C.Id as Id, C.Question, C.Answer,T.Id as Id, T.Name " +
+            "FROM Cards C " +
+            "INNER JOIN CardTags CT on C.Id = CT.CardId " +
+            "INNER JOIN Tags T on T.Id = CT.TagId", 
+            (card, tag) =>
+            {
+                card.Tags.Add(tag);
+                return card;
+            });
+        var groupedCards = cards.GroupBy(x => x.Id).Select(x =>
+        {
+            var card = x.First();
+            card.Tags = x.Select(y => y.Tags.First()).ToList();
+            return card;
+        });
+
+        return groupedCards.ToArray();
     }
 }
 
