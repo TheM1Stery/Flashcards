@@ -14,6 +14,8 @@ builder.Services.AddMediator(o =>
     o.ServiceLifetime = ServiceLifetime.Scoped;
 });
 
+builder.Services.AddDapperTypeHandlers();
+
 builder.Services.AddDbConnection(builder.Configuration["Database:ConnectionString"]);
 
 builder.Services.AddSwaggerDoc();

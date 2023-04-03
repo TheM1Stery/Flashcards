@@ -16,18 +16,10 @@ public static class WebAppExtensions
 
     public static void UseDapperTypeHandlers(this WebApplication app)
     {
-        var typeHandlers = Assembly.GetExecutingAssembly()
-            .GetTypes()
-            .Where(x =>
-                x.BaseType is { IsGenericType: true } &&
-                x.BaseType.GetGenericTypeDefinition() == typeof(SqlMapper.TypeHandler<>));
+        var typeHandlers = app.Services.GetServices<SqlMapper.ITypeHandler>();
         foreach (var typeHandler in typeHandlers)
         {
-            var type = typeHandler.BaseType?.GetGenericArguments().SingleOrDefault();
-            if (type != null)
-            {
-            }
-            SqlMapper.AddTypeHandler(type, (SqlMapper.ITypeHandler)Activator.CreateInstance(typeHandler)!);
+            SqlMapper.AddTypeHandler(typeHandler.GetType(), typeHandler);
         }
     }
 }
