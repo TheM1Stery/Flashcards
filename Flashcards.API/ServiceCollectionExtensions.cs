@@ -16,4 +16,15 @@ public static class ServiceCollectionExtensions
         });
         return collection;
     }
+
+    public static IServiceCollection AddDapperTypeHandlers(this IServiceCollection collection)
+    {
+        collection.Scan(scan => scan
+            .FromAssemblyOf<Program>()
+            .AddClasses(classes => classes.AssignableTo(typeof(SqlMapper.TypeHandler<>)))
+            .As<SqlMapper.ITypeHandler>()
+            .WithTransientLifetime()
+        );
+        return collection;
+    }
 }
